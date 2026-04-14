@@ -21,7 +21,7 @@ if (!process.env.GEMINI_API_KEY) {
 
 // ✅ Gemini setup
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
 // ✅ Scam detection
 const detectScam = async (message) => {
@@ -86,8 +86,7 @@ ${normalizeMessage}
 `;
 
     const result = await model.generateContent(prompt);
-    const text = result?.response?.text ? String(result.response.text()).trim() : "";
-
+    const text = result?.response?.text?.() ? String(result.response.text()).trim() : "";
     if (!text) {
       console.warn("⚠️ Gemini returned empty response, using fallback.");
       return buildFallbackResponse();
