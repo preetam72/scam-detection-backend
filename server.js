@@ -6,7 +6,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -392,7 +392,7 @@ app.get("/health", (req, res) => {
 });
 
 // ✅ Start
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production" || process.env.PORT || process.env.RENDER) {
   app.listen(port, () => {
     console.log(`🚀 Server running at http://localhost:${port}`);
   });
